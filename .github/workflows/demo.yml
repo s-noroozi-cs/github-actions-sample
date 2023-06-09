@@ -7,8 +7,8 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        java: [ 11, 12, 13 ]
-    name: Java ${{ matrix.java }} compile
+        java: [ 17 ]
+    name: Java compile
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v2
@@ -17,7 +17,7 @@ jobs:
         with:
           distribution: 'adopt'
           java-package: jdk
-          java-version: ${{ matrix.java }}
+          java-version: 17
       - name: Compile the Project
         working-directory: github-actions-java-maven
         run: mvn -B compile
