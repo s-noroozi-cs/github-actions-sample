@@ -19,5 +19,4 @@ jobs:
           java-package: jdk
           java-version: 17
       - name: Compile the Project
-        working-directory: github-actions-sample
         run: mvn -B compile
