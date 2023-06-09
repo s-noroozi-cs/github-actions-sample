@@ -4,26 +4,20 @@ on: [push, pull_request]
 
 jobs:
   compile:
-    # compile job
-
-  build:
     runs-on: ubuntu-20.04
-    needs: compile
-    name: Build the Maven Project
+    strategy:
+      matrix:
+        java: [ 11, 12, 13 ]
+    name: Java ${{ matrix.java }} compile
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/cache@v2
-      with:
-        path: ~/.m2/repository
-        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-        restore-keys: |
-          ${{ runner.os }}-maven-
-    - name: Set up JDK 17
-      uses: actions/setup-java@v2
-      with:
+      - name: Checkout Source Code
+        uses: actions/checkout@v2
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
           distribution: 'adopt'
-          java-version: '17'
           java-package: jdk
-    - name: Build and test project
-      working-directory: github-actions-java-maven
-      run: mvn -B package≈
+          java-version: ${{ matrix.java }}
+      - name: Compile the Project
+        working-directory: github-actions-java-maven
+        run: mvn -B compile
