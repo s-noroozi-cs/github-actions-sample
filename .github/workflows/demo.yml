@@ -39,5 +39,4 @@ jobs:
           java-version: '17'
           java-package: jdk
     - name: Build and test project
-      working-directory: github-actions-java-maven
       run: mvn -B verify
